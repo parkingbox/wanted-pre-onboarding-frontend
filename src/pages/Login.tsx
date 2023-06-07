@@ -1,4 +1,4 @@
-function SignIn() {
+function Login() {
   return (
     <div>
       <button>로그인</button>
@@ -7,4 +7,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default Login;
