@@ -1,27 +1,17 @@
-import React from "react";
 import { styled } from "styled-components";
 import Flex from "./Flex";
+import { IInputProps } from "../type/elemType/InputType";
 
-function Input(props: any) {
-  if (
-    props.type === "email" ||
-    props.type === "password" ||
-    props.type === "text"
-  )
-    return (
-      <Flex>
-        <InputText
-          onChange={props._onChange}
-          type={props.type}
-          value={props.value}
-          name={props.name}
-          placeholder={props.placeholder}
-          id={props.id}
-        />
-      </Flex>
-    );
+function Input({ name, children }: IInputProps) {
+  return (
+    <Flex>
+      <ListTitle>{name} </ListTitle>
+      <ListContent>{children}</ListContent>
+    </Flex>
+  );
 }
 
 export default Input;
 
-const InputText = styled.input``;
+const ListTitle = styled.label``;
+const ListContent = styled.input``;
