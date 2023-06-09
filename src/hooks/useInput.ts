@@ -10,7 +10,7 @@ type ReturnTypes = [
   (values: any) => void
 ];
 
-const useInputs = (initialValue: DefaultType): ReturnTypes => {
+const useInput = (initialValue: DefaultType): ReturnTypes => {
   const [values, setValues] = useState(initialValue);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,4 +24,4 @@ const useInputs = (initialValue: DefaultType): ReturnTypes => {
   return [values, onChange, setValues];
 };
 
-export default useInputs;
+export default useInput;

@@ -1,4 +1,4 @@
-import { instance } from "./api";
+import { api } from "./api";
 
 interface ICreateTodo {
   todo: string;
@@ -9,38 +9,35 @@ interface IUpdateTodo {
 }
 interface ISignProps {
   email: string;
-  password: string | number;
+  password: string;
 }
 
-export const signUp = async ({ email, password }: ISignProps) => {
-  return await instance({
-    method: "post",
-    url: "/auth/signup",
-    data: {
-      email,
-      password,
-    },
-  });
+export const signInPost = async ({ email, password }: ISignProps) => {
+  try {
+    const res = await api.post("/auth/signin", { email, password });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
 };
-export const signIn = async ({ email, password }: ISignProps) => {
-  return await instance({
-    method: "post",
-    url: "/auth/signin",
-    data: {
-      email,
-      password,
-    },
-  });
+
+export const signUpPost = async ({ email, password }: ISignProps) => {
+  try {
+    const res = await api.post("/auth/signup", { email, password });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getTodos = async () => {
-  return await instance({
+  return await api({
     method: "get",
     url: "/todos",
   });
 };
 export const createTodo = async ({ todo }: ICreateTodo) => {
-  return await instance({
+  return await api({
     method: "post",
     url: "/todos",
     data: {
@@ -49,7 +46,7 @@ export const createTodo = async ({ todo }: ICreateTodo) => {
   });
 };
 export const updateTodo = async ({ todo, isCompleted }: IUpdateTodo) => {
-  return await instance({
+  return await api({
     method: "put",
     url: "/todos/:id",
     data: {
@@ -59,7 +56,7 @@ export const updateTodo = async ({ todo, isCompleted }: IUpdateTodo) => {
   });
 };
 export const deleteTodo = async () => {
-  return await instance({
+  return await api({
     method: "delete",
     url: "/todos/:id",
   });

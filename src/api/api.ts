@@ -1,21 +1,19 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
-
-export const instance = axios.create({
+export const api = axios.create({
   baseURL: "https://www.pre-onboarding-selection-task.shop/",
   headers: {
     "Content-Type": "application/json",
   },
 });
-
-instance.interceptors.request.use(
+api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.token;
-    if (token !== null) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+    const accesstoken = localStorage.getItem("access_token");
+    if (!config.headers.Authorization) {
+      config.headers.Authorization = `Bearer ${accesstoken}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
+  (err) => {
+    return Promise.reject(err);
   }
 );
