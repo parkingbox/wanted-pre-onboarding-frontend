@@ -1,33 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signInPost } from "../api/util";
-import { AxiosResponse } from "axios";
 
 function SignUp() {
   const navigate = useNavigate();
-  const [signUp, setSignUp] = useState({
+  const [signValue, setSignValue] = useState({
     email: "",
     password: "",
   });
-  const isRegex = !signUp?.email?.includes("@") || signUp?.password?.length < 8;
+  const isRegex =
+    !signValue?.email?.includes("@") || signValue?.password?.length < 8;
 
   const onSignInHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signInPost(signUp)
-      .then((res: any) => {
-        console.log(res);
-
-        localStorage.setItem("access_token", res["access_Token"]);
-
+    signInPost(signValue)
+      .then((res) => {
+        console.log(res?.data.access_token);
+        localStorage.setItem("access_token", res?.data.access_token);
         navigate("/todo");
       })
-      .catch((err) => alert(err.statusText));
+      .catch((err) => alert(err.response.data.message));
   };
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setSignUp({
-      ...signUp,
+    setSignValue({
+      ...signValue,
       [name]: value,
     });
   };
@@ -39,14 +37,14 @@ function SignUp() {
         <input
           name="email"
           placeholder="이메일을 입력하세요"
-          value={signUp.email}
+          value={signValue.email}
           onChange={onChangeHandler}
           data-testid="email-input"
         />
         <input
           name="password"
           placeholder="패스워드를 입력하세요"
-          value={signUp.password}
+          value={signValue.password}
           onChange={onChangeHandler}
           data-testid="password-input"
         />
