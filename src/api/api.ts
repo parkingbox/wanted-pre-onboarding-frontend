@@ -8,13 +8,13 @@ export const api = axios.create({
   },
 });
 api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    if (!config.headers.Authorization) {
+  function (config: InternalAxiosRequestConfig) {
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (err) => {
+  function (err) {
     return Promise.reject(err);
   }
 );

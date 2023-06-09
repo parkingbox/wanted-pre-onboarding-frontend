@@ -1,33 +1,38 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signUpPost } from "../api/util";
+import { token } from "../api/api";
 
 function SignUp() {
   const navigate = useNavigate();
-  const [signUp, setSignUp] = useState({
+  const [signUpInput, setSignUpInput] = useState({
     email: "",
     password: "",
   });
-  const isRegex = !signUp?.email?.includes("@") || signUp?.password?.length < 8;
+  const isRegex =
+    !signUpInput?.email?.includes("@") || signUpInput?.password?.length < 8;
 
   const onSignUpHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signUpPost(signUp)
-      .then((res) => {
-        if (res?.status !== 200) {
-          alert("회원가입 성공");
-          navigate("/signin");
-        }
+    signUpPost(signUpInput)
+      .then(() => {
+        alert("회원가입 성공");
+        navigate("/signin");
       })
       .catch((err) => {
-        throw err;
+        throw new Error(err);
       });
   };
-
+  
+  useEffect(() => {
+    if (token) {
+      navigate("/todo");
+    }
+  }, []);
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setSignUp({
-      ...signUp,
+    setSignUpInput({
+      ...signUpInput,
       [name]: value,
     });
   };
@@ -41,7 +46,7 @@ function SignUp() {
           name="email"
           autoComplete="on"
           placeholder="이메일은 @를 포함하여 입력하세요"
-          value={signUp.email}
+          value={signUpInput.email}
           onChange={onChangeHandler}
           data-testid="email-input"
           required
@@ -51,12 +56,14 @@ function SignUp() {
           name="password"
           autoComplete="on"
           placeholder="패스워드는 8자리 이상 입력하세요"
-          value={signUp.password}
+          value={signUpInput.password}
           onChange={onChangeHandler}
           data-testid="password-input"
           required
         />
-        <button disabled={isRegex}>회원가입</button>
+        <button data-testid="signup-button" disabled={isRegex}>
+          회원가입
+        </button>
       </form>
     </div>
   );

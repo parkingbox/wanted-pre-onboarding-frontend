@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import SignIn from "../pages/SignIn";
 import Todos from "../pages/TodoList";
 import SignUp from "../pages/SignUp";
@@ -6,6 +6,7 @@ import Home from "../pages/Main";
 import Nav from "../components/Nav";
 
 function Router() {
+  
   return (
     <BrowserRouter>
       <Nav />

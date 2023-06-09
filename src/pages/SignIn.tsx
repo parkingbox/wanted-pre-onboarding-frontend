@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signInPost } from "../api/util";
+import { token } from "../api/api";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -29,7 +30,11 @@ function SignUp() {
       [name]: value,
     });
   };
-
+  useEffect(() => {
+    if (token) {
+      navigate("/todo");
+    }
+  }, []);
   return (
     <div>
       <h1>로그인</h1>
@@ -48,7 +53,9 @@ function SignUp() {
           onChange={onChangeHandler}
           data-testid="password-input"
         />
-        <button disabled={isRegex}>로그인</button>
+        <button data-testid="signin-button" disabled={isRegex}>
+          로그인
+        </button>
       </form>
     </div>
   );

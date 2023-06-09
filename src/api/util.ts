@@ -1,16 +1,6 @@
+import { ISignProps } from "../type/hookType/HookType";
+import { ITodoProps } from "../type/todoType/TodoType";
 import { api } from "./api";
-
-interface ICreateTodo {
-  todo: string;
-}
-interface IUpdateTodo {
-  todo: string;
-  isCompleted: boolean;
-}
-interface ISignProps {
-  email: string;
-  password: string;
-}
 
 export const signInPost = async ({ email, password }: ISignProps) => {
   try {
@@ -31,33 +21,37 @@ export const signUpPost = async ({ email, password }: ISignProps) => {
 };
 
 export const getTodos = async () => {
-  return await api({
-    method: "get",
-    url: "/todos",
-  });
+  try {
+    const data = await api.get("/todos");
+    return data;
+  } catch {
+    alert("에러");
+  }
 };
-export const createTodo = async ({ todo }: ICreateTodo) => {
-  return await api({
-    method: "post",
-    url: "/todos",
-    data: {
+export const createTodo = async (todo: string) => {
+  try {
+    const data = await api.post("/todos", { todo });
+    return data;
+  } catch {
+    alert("에러");
+  }
+};
+export const updateTodo = async ({ id, todo, isCompleted }: ITodoProps) => {
+  try {
+    const data = await api.post("/todos", {
       todo,
-    },
-  });
+      isCompleted
+    });
+    return data;
+  } catch {
+    alert("에러");
+  }
 };
-export const updateTodo = async ({ todo, isCompleted }: IUpdateTodo) => {
-  return await api({
-    method: "put",
-    url: "/todos/:id",
-    data: {
-      todo,
-      isCompleted,
-    },
-  });
-};
-export const deleteTodo = async () => {
-  return await api({
-    method: "delete",
-    url: "/todos/:id",
-  });
+export const deleteTodo = async (id: number) => {
+  try {
+    const data = await api.delete(`/todos/${id}`);
+    return data;
+  } catch {
+    alert("에러");
+  }
 };
