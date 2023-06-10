@@ -1,5 +1,4 @@
 import { ISignProps } from "../type/hookType/HookType";
-import { ITodoProps } from "../type/todoType/TodoType";
 import { api } from "./api";
 
 export const signInPost = async ({ email, password }: ISignProps) => {
@@ -7,7 +6,7 @@ export const signInPost = async ({ email, password }: ISignProps) => {
     const res = await api.post("/auth/signin", { email, password });
     return res;
   } catch (error) {
-    console.log(error);
+    alert("이메일과 비밀번호를 다시 확인 해 주세요");
   }
 };
 
@@ -31,25 +30,6 @@ export const getTodos = async () => {
 export const createTodo = async (todo: string) => {
   try {
     const data = await api.post("/todos", { todo });
-    return data;
-  } catch {
-    alert("에러");
-  }
-};
-export const updateTodo = async ({ id, todo, isCompleted }: ITodoProps) => {
-  try {
-    const data = await api.post("/todos", {
-      todo,
-      isCompleted
-    });
-    return data;
-  } catch {
-    alert("에러");
-  }
-};
-export const deleteTodo = async (id: number) => {
-  try {
-    const data = await api.delete(`/todos/${id}`);
     return data;
   } catch {
     alert("에러");

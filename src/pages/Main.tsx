@@ -1,7 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Main() {
-  return <Link to="/todo">todo</Link>;
+  const navigate = useNavigate();
+  return (
+    <div>
+      <h1>프리온보딩 사전과제</h1>
+      <button onClick={() => navigate("/todo")}>
+        <Link to="/todo">Getting Start</Link>
+      </button>
+    </div>
+  );
 }
 
 export default Main;

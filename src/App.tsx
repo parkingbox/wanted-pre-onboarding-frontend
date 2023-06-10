@@ -1,8 +1,4 @@
-import Router from "./shared/Router"
-;
-import { useNavigate } from "react-router-dom";
-import { token } from "./api/api";
-import { useEffect } from "react";
+import Router from "./shared/Router";
 
 function App() {
   return <Router />;
